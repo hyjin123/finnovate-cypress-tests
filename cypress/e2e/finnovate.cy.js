@@ -16,16 +16,19 @@ describe('Finnovate Website Test', () => {
     cy.contains('h1', 'Meet the team').should('be.visible');
   });
 
+  //check if blog nav link opens up a new exeternal link for their medium blog
+
   //contact form test (don't submit, commented out)
   describe('Form Test', () => {
-    it.only('should submit the contact form located at the bottom of the page', () => {
-      //pointer-event: none prevents user mouse interaction
-      cy.get('#first-name').type("Sean");
-      cy.get('#last-name').type("Jin");
-      cy.get('#email').type("seanhoyeonjin@gmail.com");
-      cy.get('#phone').type("123-456-7891");
-      cy.get('textarea').type("Hello, Testing");
-      //cy.get('button[type="submit"]').click();
+    it('should submit the contact form located at the bottom of the page', () => {
+      cy.fillForm({
+        firstName: 'Sean',
+        lastName: 'Jin',
+        email: 'sean@gmail.com',
+        phone: '905-888-8888',
+        message: 'Hello, this is Sean'
+      });
+      //cy.contain('button','Submit').click();
       //cy.contains('Thank you');
     });
 
@@ -33,10 +36,25 @@ describe('Finnovate Website Test', () => {
     it('should open up a form modal', () => {
       cy.contains('Get in touch').click();
     });
-    //check if blog nav link opens up a new tab for their medium blog
 
     //submit button in contact form should not be clickable if no first name, last name, or email is provided
+    it.only('submit button should be disabled if no email', () => {
+      cy.fillForm({
+        firstName: 'Sean',
+        lastName: 'Jin',
+        phone: '905-888-8888',
+        message: 'Hello, this is Sean'
+      });
+      cy.contains('button', 'Submit').should('be.disabled');
 
+      //now, input the email and check if it's enabled
+      cy.get('#email').type('seanhoyeonjin@gmail.com');
+      cy.contains('button', 'Submit').should('not.be.disabled');
+    });
+
+    //excessive input length to see what happens?
+
+    //special characters in the form, XSS?
   });
 
 

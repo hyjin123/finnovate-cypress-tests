@@ -23,3 +23,11 @@
 //
 // -- This will overwrite an existing command --
 // Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
+
+Cypress.Commands.add('fillForm', ({ firstName, lastName, email, phone, message }) => {
+  if (firstName) cy.get('#first-name').type(firstName);
+  if (lastName) cy.get('#last-name').type(lastName);
+  if (email) cy.get('#email').type(email);
+  if (phone) cy.get('#phone').type(phone);
+  if (message) cy.get('textarea').type(message);
+});
