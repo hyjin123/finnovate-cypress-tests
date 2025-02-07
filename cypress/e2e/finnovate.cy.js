@@ -17,6 +17,17 @@ describe('Finnovate Website Test', () => {
   });
 
   //check if blog nav link opens up a new exeternal link for their medium blog
+  it('should open a new link to Medium blog page', () => {
+
+    // check if the Blog element has href that includes medium.com
+    cy.contains('Blog').should('have.attr', 'href').and('contain', 'medium.com');
+
+    // this will open the new link in the same tab instead of new tab
+    cy.contains('Blog').invoke('removeAttr', 'target').click();
+    cy.origin('https://medium.com', () => {
+      cy.url().should('include', '/finnovate-io');
+    });
+  });
 
   //contact form test (don't submit, commented out)
   describe('Form Test', () => {
@@ -32,13 +43,13 @@ describe('Finnovate Website Test', () => {
       //cy.contains('Thank you');
     });
 
-    //check to see if form modal opens up when clicking on "Get in touch"
+    // check to see if form modal opens up when clicking on "Get in touch"
     it('should open up a form modal', () => {
       cy.contains('Get in touch').click();
     });
 
-    //submit button in contact form should not be clickable if no first name, last name, or email is provided
-    it.only('submit button should be disabled if no email', () => {
+    // submit button should be disabled if no email is provided
+    it('submit button should be disabled if no email', () => {
       cy.fillForm({
         firstName: 'Sean',
         lastName: 'Jin',
@@ -47,16 +58,13 @@ describe('Finnovate Website Test', () => {
       });
       cy.contains('button', 'Submit').should('be.disabled');
 
-      //now, input the email and check if it's enabled
+      // now, input the email and check if it's enabled
       cy.get('#email').type('seanhoyeonjin@gmail.com');
       cy.contains('button', 'Submit').should('not.be.disabled');
     });
-
-    //excessive input length to see what happens?
-
-    //special characters in the form, XSS?
   });
-
-
 });
 
+// Potential test cases
+// excessive input length to see what happens?
+// special characters in the form, XSS?
