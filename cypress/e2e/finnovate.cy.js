@@ -16,7 +16,6 @@ describe('Finnovate Website Test', () => {
     cy.contains('h1', 'Meet the team').should('be.visible');
   });
 
-  //hovering over Services in navbar should 
   //check if blog nav link opens up a new exeternal link for their medium blog
   it('should open a new link to Medium blog page', () => {
     // check if the Blog element has href that includes medium.com
@@ -49,11 +48,6 @@ describe('Finnovate Website Test', () => {
       //cy.contains('Thank you');
     });
 
-    // check to see if form modal opens up when clicking on "Get in touch"
-    // it('should open up a form modal', () => {
-    //   cy.contains('Get in touch').click();
-    // });
-
     // submit button should be disabled if no email is provided
     it('submit button should be disabled if no email', () => {
       cy.fillForm({
@@ -65,7 +59,7 @@ describe('Finnovate Website Test', () => {
       cy.contains('button', 'Submit').should('be.disabled');
 
       // now, input the email and check if it's enabled
-      cy.get('#email').type('seanhoyeonjin@gmail.com');
+      cy.get('#email').type('sean@gmail.com');
       cy.contains('button', 'Submit').should('not.be.disabled');
     });
   });
